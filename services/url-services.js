@@ -19,7 +19,7 @@ async function findByUrlId(id) {
 }
 
 async function findByMappedUrl(mapped_url) {
-  return await UrlSchema.findById({ mapped_url: mapped_url });
+  return await UrlSchema.findOne({ mapped_url: mapped_url });
 }
 
 async function createUrl(url_object) {
@@ -33,10 +33,12 @@ async function updateUrlView(mapped_url) {
   let foundUrl = await findByMappedUrl(mapped_url);
 
   if (!foundUrl) {
+    console.log("EXIT");
     return null;
   }
-  foundUrl.last_visit = Date.now;
-  foundUrl.visit_count += 1;
+  console.log("NEXT");
+  foundUrl.last_view = Date.now();
+  foundUrl.view_count += 1;
 
   return await foundUrl.save();
 }

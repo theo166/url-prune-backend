@@ -19,12 +19,12 @@ const urlsSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  last_visit: {
+  last_view: {
     type: Date,
     required: true,
     default: Date.now,
   },
-  visit_count: {
+  view_count: {
     type: Number,
     required: true,
     default: 0,

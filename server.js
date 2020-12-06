@@ -21,7 +21,10 @@ db.on(
   console.error.bind(console, "Error establishing DB connection: ")
 );
 db.once("open", async () => {
-  console.log(`Connection to MongoDB ${process.env.DB_NAME} successful!`);
+  console.log(
+    `%c Connection to MongoDB ${process.env.DB_NAME} successful!`,
+    "color: #bada55"
+  );
 });
 
 // Middlewares
@@ -33,5 +36,8 @@ server.use(cors());
 server.get("/", function welcome(req, res) {
   res.send(`Welcome to the ${process.env.ENVIRONMENT} API of URL Pruning!`);
 });
+
+const urlRouter = require("./routes/url-router.js");
+server.use("/v1/urls", urlRouter);
 
 module.exports = server;
