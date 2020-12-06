@@ -4,7 +4,8 @@
   "description": "A RESTful backend service providing url shortening services created with node.js, express and mongDB for my next.js frontend.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "develop": "nodemon index.js"
   },
   "repository": {
     "type": "git",
