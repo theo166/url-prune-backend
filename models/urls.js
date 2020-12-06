@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { nanoid } = require("nanoid");
 
 const urlsSchema = new mongoose.Schema({
   url: {
@@ -11,7 +12,7 @@ const urlsSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    lowercase: true,
+    default: () => nanoid(),
   },
   created_at: {
     type: Date,
