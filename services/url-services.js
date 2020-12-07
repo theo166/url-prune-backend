@@ -6,6 +6,7 @@ module.exports = {
   findAll,
   findByUrlId,
   findByMappedUrl,
+  findByOriginalUrl,
   createUrl,
   updateUrlView,
 };
@@ -22,9 +23,13 @@ async function findByMappedUrl(mapped_url) {
   return await UrlSchema.findOne({ mapped_url: mapped_url });
 }
 
-async function createUrl(url_object) {
+async function findByOriginalUrl(url) {
+  return await UrlSchema.findOne({ url: url });
+}
+
+async function createUrl(given_url) {
   const url = new UrlSchema({
-    url: url_object.url,
+    url: given_url,
   });
   return await url.save();
 }
@@ -33,10 +38,8 @@ async function updateUrlView(mapped_url) {
   let foundUrl = await findByMappedUrl(mapped_url);
 
   if (!foundUrl) {
-    console.log("EXIT");
     return null;
   }
-  console.log("NEXT");
   foundUrl.last_view = Date.now();
   foundUrl.view_count += 1;
 

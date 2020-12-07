@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isUrl = require("is-url");
 
 const urlServices = require("../services/url-services");
 
@@ -32,8 +33,19 @@ router.get("/:id", async (req, res) => {
 // POST create new URL mapping
 router.post("/add", async (req, res) => {
   try {
-    const newUrl = await urlServices.createUrl(req.body);
-    res.status(201).json({ url: newUrl });
+    const parsedUrl = validateURl(req.body.url);
+
+    if (parsedUrl) {
+      const foundUrl = await urlServices.findByOriginalUrl(parsedUrl);
+      if (foundUrl) {
+        return res.status(200).json({ url: foundUrl });
+      }
+
+      const newUrl = await urlServices.createUrl(parsedUrl);
+      res.status(201).json({ url: newUrl });
+    } else {
+      res.status(400).json({ message: "Provided url is malformed." });
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -55,5 +67,27 @@ router.get("/viewed/:code", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+// Utilities
+function validateURl(given_url) {
+  let parsedUrl = given_url;
+
+  if (parsedUrl.includes("www.")) {
+    parsedUrl = parsedUrl.replace("www.", "");
+  }
+
+  if (parsedUrl.includes("http://")) {
+    parsedUrl = parsedUrl.replace("http://", "https://");
+  }
+
+  if (!parsedUrl.includes("https://")) {
+    parsedUrl = "https://" + parsedUrl;
+  }
+
+  if (parsedUrl && isUrl(parsedUrl)) {
+    return parsedUrl;
+  }
+  return null;
+}
 
 module.exports = router;
