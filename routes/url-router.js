@@ -60,7 +60,9 @@ router.get("/viewed/:code", async (req, res) => {
 
     let updatedUrl = await urlServices.updateUrlView(code);
     if (!updatedUrl) {
-      res.status(404).json({ message: `Url mapped to ${code} was not found.` });
+      return res
+        .status(404)
+        .json({ message: `Url mapped to ${code} was not found.` });
     }
     res.status(200).json({ updatedUrl });
   } catch (err) {
