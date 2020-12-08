@@ -1,0 +1,34 @@
+{
+  "name": "url-prune-backend",
+  "version": "1.0.0",
+  "description": "A RESTful backend service providing url shortening services created with node.js, express and mongDB for my next.js frontend.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "develop": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaschaWebDev/url-prune-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SaschaWebDev/url-prune-backend/issues"
+  },
+  "homepage": "https://github.com/SaschaWebDev/url-prune-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "is-url": "^1.2.4",
+    "mongoose": "^5.11.4",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.20"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
