@@ -70,6 +70,25 @@ router.get("/viewed/:code", async (req, res) => {
   }
 });
 
+// GET receive a redirct for a given code
+router.get("/redirect/:code", async (req, res) => {
+  try {
+    const {
+      params: { code },
+    } = req;
+
+    let foundUrl = await urlServices.findByMappedUrl(code);
+    if (!foundUrl) {
+      return res
+        .status(404)
+        .json({ message: `Url mapped to ${code} was not found.` });
+    }
+    res.redirect(foundUrl.url);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Utilities
 function validateURl(given_url) {
   let parsedUrl = given_url;
